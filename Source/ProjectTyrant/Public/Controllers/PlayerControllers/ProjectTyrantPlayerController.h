@@ -39,7 +39,7 @@ private:
 	TObjectPtr<UInputAction> LookInputAction;
 
 	UPROPERTY(EditDefaultsOnly, Category="Input")
-	TObjectPtr<UInputAction> JumpInputAction;
+	TObjectPtr<UInputAction> RunInputAction;
 
 	void BindInputActions();
 
@@ -52,9 +52,9 @@ private:
 	// Calls Look function on the character
 	void LookActionTriggered(const FInputActionValue& Value);
 
-	// Calls Jump function on the character
-	void JumpActionTriggered();
+	// Calls StartRunning function on the character
+	void RunActionStarted();
 
-	// Calls StopJumping function on the character
-	void JumpActionCompleted();
+	// Calls StopRunning function on the character
+	void RunActionCompleted();
 };

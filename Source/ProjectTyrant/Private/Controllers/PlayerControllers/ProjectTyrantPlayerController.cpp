@@ -54,13 +54,13 @@ void AProjectTyrantPlayerController::BindInputActions()
 			&ThisClass::LookActionTriggered);
 	}
 
-	if (ensureAlways(JumpInputAction))
+	if (ensureAlways(RunInputAction))
 	{
-		EnhancedInputComponent->BindAction(JumpInputAction, ETriggerEvent::Triggered, this,
-			&ThisClass::JumpActionTriggered);
+		EnhancedInputComponent->BindAction(RunInputAction, ETriggerEvent::Started, this,
+			&ThisClass::RunActionStarted);
 
-		EnhancedInputComponent->BindAction(JumpInputAction, ETriggerEvent::Completed, this,
-			&ThisClass::JumpActionCompleted);
+		EnhancedInputComponent->BindAction(RunInputAction, ETriggerEvent::Completed, this,
+			&ThisClass::RunActionCompleted);
 	}
 }
 
@@ -103,23 +103,23 @@ void AProjectTyrantPlayerController::LookActionTriggered(const FInputActionValue
 	}
 }
 
-void AProjectTyrantPlayerController::JumpActionTriggered()
+void AProjectTyrantPlayerController::RunActionStarted()
 {
 	AMoverCharacter* MoverCharacter = GetMoverCharacter();
 
 	if (ensureAlways(IsValid(MoverCharacter)))
 	{
-		MoverCharacter->Jump();
+		MoverCharacter->StartRunning();
 	}
 }
 
-void AProjectTyrantPlayerController::JumpActionCompleted()
+void AProjectTyrantPlayerController::RunActionCompleted()
 {
 	AMoverCharacter* MoverCharacter = GetMoverCharacter();
 
 	if (ensureAlways(IsValid(MoverCharacter)))
 	{
-		MoverCharacter->StopJumping();
+		MoverCharacter->StopRunning();
 	}
 }
 // ReSharper restore CppMemberFunctionMayBeConst

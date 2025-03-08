@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "MoverSimulationTypes.h"
+#include "Mover/ProjectTyrantMoverInputs.h"
 #include "MoverCharacter.generated.h"
 
 class UCapsuleComponent;
@@ -38,12 +39,12 @@ public:
 
 	// Should be called for movement input completion
 	void StopMoving();
+	
+	// Should be called for run input start
+	void StartRunning();
 
-	// Should be called for jump input trigger
-	void Jump();
-
-	// Should be called for jump input completion
-	void StopJumping();
+	// Should be called for run input completion
+	void StopRunning();
 
 	virtual FVector ConsumeMovementInputVector() override;
 
@@ -92,10 +93,6 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
 	bool bMaintainLastInputOrientation = false;
 
-	// If true, the actor will jump continuously while the jump input is held
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement")
-	bool bAllowAutoJump = false;
-
 	/**
 	 * Entry point for input production. Override this function in a native class to author input for the next
 	 * simulation frame. Consider also calling Super method.
@@ -140,6 +137,7 @@ private:
 
 	FVector CachedMoveInputVelocity = FVector::ZeroVector;
 
-	bool bIsJumpJustPressed = false;
-	bool bIsJumpPressed = false;
+	TSharedPtr<FProjectTyrantMoverInputs> ProducedMoverInputs = MakeShared<FProjectTyrantMoverInputs>();
+
+	bool bRunPressed = false;
 };

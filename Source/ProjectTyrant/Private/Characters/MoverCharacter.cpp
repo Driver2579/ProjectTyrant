@@ -10,6 +10,7 @@
 #include "Components/ArrowComponent.h"
 #include "DefaultMovementSet/CharacterMoverComponent.h"
 #include "DefaultMovementSet/NavMoverComponent.h"
+#include "Mover/ProjectTyrantMoverInputs.h"
 
 AMoverCharacter::AMoverCharacter()
 {
@@ -157,8 +158,7 @@ FVector AMoverCharacter::ConsumeMovementInputVector()
 	return Internal_ConsumeMovementInputVector();
 }
 
-void AMoverCharacter::ProduceInput_Implementation(int32 SimTimeMs,
-	FMoverInputCmdContext& InputCmdResult)
+void AMoverCharacter::ProduceInput_Implementation(int32 SimTimeMs, FMoverInputCmdContext& InputCmdResult)
 {
 	// The code below was copied from the MoverExamplesCharacter::OnProduceInput method with some modifications
 
@@ -276,9 +276,6 @@ void AMoverCharacter::ProduceInput_Implementation(int32 SimTimeMs,
 		CharacterInputs.OrientationIntent = CharacterInputs.OrientationIntent.GetSafeNormal2D();
 	}
 
-	CharacterInputs.bIsJumpPressed = bIsJumpPressed;
-	CharacterInputs.bIsJumpJustPressed = bIsJumpJustPressed;
-
 	CharacterInputs.SuggestedMovementMode = NAME_None;
 
 	// Convert inputs to be relative to the current movement base (depending on options and state)
@@ -307,17 +304,11 @@ void AMoverCharacter::ProduceInput_Implementation(int32 SimTimeMs,
 		}
 	}
 
-	// Don't stop jumping if we allow auto-jump. It will be disabled only when we stop jumping then.
-	if (!bAllowAutoJump)
-	{
-		// The next comment was left by Epic. I have no idea what it means.
-		/**
-		 * Clear/consume temporal movement inputs. We are not consuming others in the event that the game world is
-		 * ticking at a lower rate than the Mover simulation. In that case, we want most input to carry over between
-		 * simulation frames.
-		 */
-		bIsJumpJustPressed = false;
-	}
+	// The code below is completely new and not copied from anywhere
+
+	ProducedMoverInputs->bRunPressed = bRunPressed;
+
+	InputCmdResult.InputCollection.AddOrOverwriteData(ProducedMoverInputs);
 }
 
 void AMoverCharacter::Look(const FVector2D& LookAxisVector)
@@ -343,18 +334,12 @@ void AMoverCharacter::StopMoving()
 	ConsumeMovementInputVector();
 }
 
-void AMoverCharacter::Jump()
+void AMoverCharacter::StartRunning()
 {
-	// The code below was copied from the MoverExamplesCharacter::OnJumpStarted method
-
-	bIsJumpJustPressed = !bIsJumpPressed;
-	bIsJumpPressed = true;
+	bRunPressed = true;
 }
 
-void AMoverCharacter::StopJumping()
+void AMoverCharacter::StopRunning()
 {
-	// The code below was copied from the MoverExamplesCharacter::OnJumpReleased method
-
-	bIsJumpPressed = false;
-	bIsJumpJustPressed = false;
+	bRunPressed = false;
 }
