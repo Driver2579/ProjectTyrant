@@ -54,6 +54,15 @@ void AProjectTyrantPlayerController::BindInputActions()
 			&ThisClass::LookActionTriggered);
 	}
 
+	if (ensureAlways(JumpInputAction))
+	{
+		EnhancedInputComponent->BindAction(JumpInputAction, ETriggerEvent::Triggered, this,
+			&ThisClass::JumpActionTriggered);
+
+		EnhancedInputComponent->BindAction(JumpInputAction, ETriggerEvent::Completed, this,
+			&ThisClass::JumpActionCompleted);
+	}
+
 	if (ensureAlways(RunInputAction))
 	{
 		EnhancedInputComponent->BindAction(RunInputAction, ETriggerEvent::Started, this,
@@ -100,6 +109,26 @@ void AProjectTyrantPlayerController::LookActionTriggered(const FInputActionValue
 	if (ensureAlways(IsValid(MoverCharacter)))
 	{
 		MoverCharacter->Look(Value.Get<FVector2D>());
+	}
+}
+
+void AProjectTyrantPlayerController::JumpActionTriggered()
+{
+	AMoverCharacter* MoverCharacter = GetMoverCharacter();
+
+	if (ensureAlways(IsValid(MoverCharacter)))
+	{
+		MoverCharacter->Jump();
+	}
+}
+
+void AProjectTyrantPlayerController::JumpActionCompleted()
+{
+	AMoverCharacter* MoverCharacter = GetMoverCharacter();
+
+	if (ensureAlways(IsValid(MoverCharacter)))
+	{
+		MoverCharacter->StopJumping();
 	}
 }
 

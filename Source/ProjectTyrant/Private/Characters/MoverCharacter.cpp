@@ -10,7 +10,7 @@
 #include "Components/ArrowComponent.h"
 #include "DefaultMovementSet/CharacterMoverComponent.h"
 #include "DefaultMovementSet/NavMoverComponent.h"
-#include "Mover/ProjectTyrantMoverInputs.h"
+#include "DefaultMovementSet/Settings/CommonLegacyMovementSettings.h"
 
 AMoverCharacter::AMoverCharacter()
 {
@@ -275,6 +275,9 @@ void AMoverCharacter::ProduceInput_Implementation(int32 SimTimeMs, FMoverInputCm
 		// Canceling out any z intent if the actor is supposed to remain vertical
 		CharacterInputs.OrientationIntent = CharacterInputs.OrientationIntent.GetSafeNormal2D();
 	}
+	
+	CharacterInputs.bIsJumpPressed = bIsJumpPressed;
+	CharacterInputs.bIsJumpJustPressed = bIsJumpJustPressed;
 
 	CharacterInputs.SuggestedMovementMode = NAME_None;
 
@@ -304,11 +307,17 @@ void AMoverCharacter::ProduceInput_Implementation(int32 SimTimeMs, FMoverInputCm
 		}
 	}
 
-	// The code below is completely new and not copied from anywhere
-
-	ProducedMoverInputs->bRunPressed = bRunPressed;
-
-	InputCmdResult.InputCollection.AddOrOverwriteData(ProducedMoverInputs);
+	// Don't stop jumping if we allow auto-jump. It will be disabled only when we stop jumping then.
+	if (!bAllowAutoJump)
+	{
+		// The next comment was left by Epic. I have no idea what it means.
+		/**
+		 * Clear/consume temporal movement inputs. We are not consuming others in the event that the game world is
+		 * ticking at a lower rate than the Mover simulation. In that case, we want most input to carry over between
+		 * simulation frames.
+		 */
+		bIsJumpJustPressed = false;
+	}
 }
 
 void AMoverCharacter::Look(const FVector2D& LookAxisVector)
@@ -334,12 +343,42 @@ void AMoverCharacter::StopMoving()
 	ConsumeMovementInputVector();
 }
 
-void AMoverCharacter::StartRunning()
+void AMoverCharacter::Jump()
 {
-	bRunPressed = true;
+	// The code below was copied from the MoverExamplesCharacter::OnJumpStarted method
+
+	bIsJumpJustPressed = !bIsJumpPressed;
+	bIsJumpPressed = true;
 }
 
+void AMoverCharacter::StopJumping()
+{
+	// The code below was copied from the MoverExamplesCharacter::OnJumpReleased method
+
+	bIsJumpPressed = false;
+	bIsJumpJustPressed = false;
+}
+
+void AMoverCharacter::StartRunning()
+{
+	UCommonLegacyMovementSettings* SharedSettings = CharacterMoverComponent->FindSharedSettings_Mutable<
+		UCommonLegacyMovementSettings>();
+
+	if (ensureAlways(IsValid(SharedSettings)))
+	{
+		SpeedBeforeRunning = SharedSettings->MaxSpeed;
+		SharedSettings->MaxSpeed = RunSpeed;
+	}
+}
+
+// ReSharper disable once CppMemberFunctionMayBeConst
 void AMoverCharacter::StopRunning()
 {
-	bRunPressed = false;
+	UCommonLegacyMovementSettings* SharedSettings = CharacterMoverComponent->FindSharedSettings_Mutable<
+		UCommonLegacyMovementSettings>();
+
+	if (ensureAlways(IsValid(SharedSettings)))
+	{
+		SharedSettings->MaxSpeed = SpeedBeforeRunning;
+	}
 }
