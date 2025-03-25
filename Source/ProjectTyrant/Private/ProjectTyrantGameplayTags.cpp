@@ -1,4 +1,4 @@
-﻿// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Vladislav Semchuk, 2025
 
 #include "ProjectTyrantGameplayTags.h"
 
