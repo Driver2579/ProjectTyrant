@@ -12,9 +12,6 @@ class UInputAction;
 
 struct FInputActionValue;
 
-/**
- * 
- */
 UCLASS()
 class PROJECTTYRANT_API AProjectTyrantPlayerController : public APlayerController
 {

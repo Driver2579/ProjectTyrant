@@ -18,4 +18,7 @@ private:
 	// The widgets to create at the start of the game
 	UPROPERTY(EditDefaultsOnly, Category="Widgets")
 	TArray<TSubclassOf<UUserWidget>> WidgetsToCreate;
+
+	UPROPERTY(EditDefaultsOnly, Category="Cursor")
+	bool bShowCursorFromStart = false;
 };

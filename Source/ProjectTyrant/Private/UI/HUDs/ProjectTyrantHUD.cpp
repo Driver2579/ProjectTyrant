@@ -8,13 +8,17 @@ void AProjectTyrantHUD::BeginPlay()
 {
 	Super::BeginPlay();
 
+	APlayerController* OwningPlayerController = GetOwningPlayerController();
+
 	for (const TSubclassOf WidgetClass : WidgetsToCreate)
 	{
-		UUserWidget* CreatedWidget = CreateWidget(GetOwningPlayerController(), WidgetClass);
+		UUserWidget* CreatedWidget = CreateWidget(OwningPlayerController, WidgetClass);
 
 		if (ensureAlways(IsValid(CreatedWidget)))
 		{
 			CreatedWidget->AddToViewport();
 		}
 	}
+
+	OwningPlayerController->SetShowMouseCursor(bShowCursorFromStart);
 }

@@ -19,10 +19,10 @@ protected:
 
 private:
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UTextBlock> CurrentScore;
+	TObjectPtr<UTextBlock> CurrentScoreText;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UTextBlock> TargetScore;
+	TObjectPtr<UTextBlock> TargetScoreText;
 
-	void OnCurrentScoreChanged(const uint16 NewCurrentScore) const;
+	void OnCurrentScoreChanged(const uint16 CurrentScore) const;
 };

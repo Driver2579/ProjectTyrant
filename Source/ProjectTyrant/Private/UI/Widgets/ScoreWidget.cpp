@@ -17,23 +17,23 @@ void UScoreWidget::NativeConstruct()
 		return;
 	}
 
-	if (CurrentScore)
+	if (CurrentScoreText)
 	{
-		CurrentScore->SetText(FText::AsNumber(ScoringGameState->GetCurrentScore()));
+		CurrentScoreText->SetText(FText::AsNumber(ScoringGameState->GetCurrentScore()));
 	}
 
-	if (TargetScore)
+	if (TargetScoreText)
 	{
-		TargetScore->SetText(FText::AsNumber(ScoringGameState->GetTargetScore()));
+		TargetScoreText->SetText(FText::AsNumber(ScoringGameState->GetTargetScore()));
 	}
 
 	ScoringGameState->OnCurrentScoreChanged.AddUObject(this, &ThisClass::OnCurrentScoreChanged);
 }
 
-void UScoreWidget::OnCurrentScoreChanged(const uint16 NewCurrentScore) const
+void UScoreWidget::OnCurrentScoreChanged(const uint16 CurrentScore) const
 {
-	if (IsValid(CurrentScore))
+	if (CurrentScoreText)
 	{
-		CurrentScore->SetText(FText::AsNumber(NewCurrentScore));
+		CurrentScoreText->SetText(FText::AsNumber(CurrentScore));
 	}
 }
