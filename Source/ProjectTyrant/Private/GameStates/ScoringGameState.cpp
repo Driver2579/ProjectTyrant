@@ -22,10 +22,12 @@ void AScoringGameState::AddScore(const uint16 ScoreToAdd)
 	const uint16 OldScore = CurrentScore;
 	CurrentScore = FMath::Clamp<uint16>(CurrentScore + ScoreToAdd, 0, TargetScore);
 
-	if (OldScore != CurrentScore)
+	if (OldScore == CurrentScore)
 	{
-		OnCurrentScoreChanged.Broadcast(CurrentScore);
+		return;
 	}
+
+	OnCurrentScoreChanged.Broadcast(CurrentScore);
 
 	if (CurrentScore >= TargetScore)
 	{
