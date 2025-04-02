@@ -20,6 +20,11 @@ class PROJECTTYRANT_API AProjectTyrantPlayerController : public APlayerControlle
 public:
 	AMoverCharacter* GetMoverCharacter() const;
 
+	bool IsPauseMenuOpened() const { return bPauseMenuOpened; }
+
+	void OpenPauseMenu();
+	void ClosePauseMenu();
+
 protected:
 	virtual void SetupInputComponent() override;
 
@@ -40,6 +45,9 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="Input")
 	TObjectPtr<UInputAction> RunInputAction;
+
+	UPROPERTY(EditDefaultsOnly, Category="Input")
+	TObjectPtr<UInputAction> PauseInputAction;
 
 	void BindInputActions();
 
@@ -63,4 +71,21 @@ private:
 
 	// Calls StopRunning function on the character
 	void RunActionCompleted();
+
+	// Opens or closes the pause menu
+	void TogglePauseMenu();
+
+	bool bPauseMenuOpened = false;
+
+	UPROPERTY(EditDefaultsOnly, Category="Music")
+	TSoftObjectPtr<USoundBase> PauseMusic;
+
+	TSharedPtr<struct FStreamableHandle> LoadPauseMusicHandle;
+
+	void OnPauseMusicLoaded();
+
+	UPROPERTY(Transient)
+	TObjectPtr<UAudioComponent> PauseMusicComponent;
+
+	bool bShowMouseCursorAfterPauseMenuHidden = false;
 };

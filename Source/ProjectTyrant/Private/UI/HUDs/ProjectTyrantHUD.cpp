@@ -24,6 +24,37 @@ void AProjectTyrantHUD::BeginPlay()
 	OwningPlayerController->SetShowMouseCursor(bShowCursorFromStart);
 }
 
+void AProjectTyrantHUD::ShowPauseMenu()
+{
+	if (ensureAlways(!PauseMenuWidgetClass.IsNull()))
+	{
+		LoadPauseMenuWidgetClassHandle = UAssetManager::GetStreamableManager().RequestAsyncLoad(
+			PauseMenuWidgetClass.ToSoftObjectPath(),
+			FStreamableDelegate::CreateUObject(this, &ThisClass::OnPauseMenuWidgetClassLoaded));
+	}
+}
+
+void AProjectTyrantHUD::OnPauseMenuWidgetClassLoaded()
+{
+	PauseMenuWidget = CreateWidget(GetOwningPlayerController(), PauseMenuWidgetClass.Get());
+	PauseMenuWidget->AddToViewport();
+}
+
+void AProjectTyrantHUD::HidePauseMenu()
+{
+	if (ensureAlways(PauseMenuWidget))
+	{
+		PauseMenuWidget->RemoveFromParent();
+		PauseMenuWidget = nullptr;
+	}
+
+	if (LoadPauseMenuWidgetClassHandle.IsValid())
+	{
+		LoadPauseMenuWidgetClassHandle->CancelHandle();
+		LoadPauseMenuWidgetClassHandle.Reset();
+	}
+}
+
 void AProjectTyrantHUD::ShowWinWidget()
 {
 	if (ensureAlways(!WinWidgetClass.IsNull()))

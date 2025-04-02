@@ -12,6 +12,9 @@ class PROJECTTYRANT_API AProjectTyrantHUD : public AHUD
 	GENERATED_BODY()
 
 public:
+	void ShowPauseMenu();
+	void HidePauseMenu();
+
 	void ShowWinWidget();
 	void ShowLoseWidget();
 
@@ -25,6 +28,16 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="Cursor")
 	bool bShowCursorFromStart = false;
+
+	UPROPERTY(EditDefaultsOnly, Category="Widgets")
+	TSoftClassPtr<UUserWidget> PauseMenuWidgetClass;
+
+	TSharedPtr<struct FStreamableHandle> LoadPauseMenuWidgetClassHandle;
+
+	void OnPauseMenuWidgetClassLoaded();
+
+	UPROPERTY(Transient)
+	TObjectPtr<UUserWidget> PauseMenuWidget;
 
 	UPROPERTY(EditDefaultsOnly, Category="Widgets")
 	TSoftClassPtr<UUserWidget> WinWidgetClass;
