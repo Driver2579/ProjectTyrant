@@ -13,4 +13,13 @@ class AProjectTyrantGameMode : public AGameModeBase
 
 public:
 	AProjectTyrantGameMode();
+
+	// Should be called when the player wins
+	void Win(APlayerController* PlayerController);
+
+	// Should be called when the player loses
+	void Lose(APlayerController* PlayerController);
+
+private:
+	void EndGame(APlayerController* PlayerController);
 };

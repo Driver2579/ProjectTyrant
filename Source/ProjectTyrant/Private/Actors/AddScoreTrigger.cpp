@@ -20,6 +20,13 @@ void AAddScoreTrigger::NotifyActorBeginOverlap(AActor* OtherActor)
 		return;
 	}
 
+	const APawn* Pawn = Cast<APawn>(OtherActor);
+
+	if (!IsValid(Pawn) || !IsValid(Pawn->GetController<APlayerController>()))
+	{
+		return;
+	}
+
 	AScoringGameState* ScoringGameState = GetWorld()->GetGameState<AScoringGameState>();
 
 	if (IsValid(ScoringGameState))

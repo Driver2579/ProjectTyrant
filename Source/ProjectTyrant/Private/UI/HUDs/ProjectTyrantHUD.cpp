@@ -3,6 +3,7 @@
 #include "UI/HUDs/ProjectTyrantHUD.h"
 
 #include "Blueprint/UserWidget.h"
+#include "Engine/AssetManager.h"
 
 void AProjectTyrantHUD::BeginPlay()
 {
@@ -21,4 +22,46 @@ void AProjectTyrantHUD::BeginPlay()
 	}
 
 	OwningPlayerController->SetShowMouseCursor(bShowCursorFromStart);
+}
+
+void AProjectTyrantHUD::ShowWinWidget()
+{
+	if (ensureAlways(!WinWidgetClass.IsNull()))
+	{
+		UAssetManager::GetStreamableManager().RequestAsyncLoad(WinWidgetClass.ToSoftObjectPath(),
+			FStreamableDelegate::CreateUObject(this, &ThisClass::OnWinWidgetLoaded));
+	}
+}
+
+void AProjectTyrantHUD::ShowLoseWidget()
+{
+	if (ensureAlways(!LoseWidgetClass.IsNull()))
+	{
+		UAssetManager::GetStreamableManager().RequestAsyncLoad(LoseWidgetClass.ToSoftObjectPath(),
+			FStreamableDelegate::CreateUObject(this, &ThisClass::OnLoseWidgetLoaded));
+	}
+}
+
+void AProjectTyrantHUD::OnWinWidgetLoaded() const
+{
+	APlayerController* OwningPlayerController = GetOwningPlayerController();
+
+	UUserWidget* WinWidget = CreateWidget(OwningPlayerController, WinWidgetClass.Get());
+
+	if (ensureAlways(IsValid(WinWidget)))
+	{
+		WinWidget->AddToViewport();
+	}
+}
+
+void AProjectTyrantHUD::OnLoseWidgetLoaded() const
+{
+	APlayerController* OwningPlayerController = GetOwningPlayerController();
+
+	UUserWidget* LoseWidget = CreateWidget(OwningPlayerController, LoseWidgetClass.Get());
+
+	if (ensureAlways(IsValid(LoseWidget)))
+	{
+		LoseWidget->AddToViewport();
+	}
 }

@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "AddScoreTrigger.generated.h"
 
-// Trigger that adds score to the ScoringGameState when overlapped, but only once
+// Trigger that adds score to the ScoringGameState when overlapped by the player, but only once
 UCLASS()
 class PROJECTTYRANT_API AAddScoreTrigger : public AActor
 {

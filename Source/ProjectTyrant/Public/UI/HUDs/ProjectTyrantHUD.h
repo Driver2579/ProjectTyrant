@@ -11,6 +11,10 @@ class PROJECTTYRANT_API AProjectTyrantHUD : public AHUD
 {
 	GENERATED_BODY()
 
+public:
+	void ShowWinWidget();
+	void ShowLoseWidget();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -21,4 +25,13 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="Cursor")
 	bool bShowCursorFromStart = false;
+
+	UPROPERTY(EditDefaultsOnly, Category="Widgets")
+	TSoftClassPtr<UUserWidget> WinWidgetClass;
+
+	UPROPERTY(EditDefaultsOnly, Category="Widgets")
+	TSoftClassPtr<UUserWidget> LoseWidgetClass;
+
+	void OnWinWidgetLoaded() const;
+	void OnLoseWidgetLoaded() const;
 };
