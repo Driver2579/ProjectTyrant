@@ -6,7 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "SettingsMenuWidget.generated.h"
 
-class UButtonContainerWidget;
+class UButtonWidgetContainer;
 class USoundSettingsMenuWidget;
 class UGraphicsSettingsMenuWidget;
 
@@ -25,10 +25,10 @@ protected:
 
 private:
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> OpenGraphicsSettingsButton;
+	TObjectPtr<UButtonWidgetContainer> OpenGraphicsSettingsButton;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> OpenSoundSettingsButton;
+	TObjectPtr<UButtonWidgetContainer> OpenSoundSettingsButton;
 
 	UFUNCTION()
 	void OnGraphicsSettingsMenuBackButtonClicked();
@@ -52,10 +52,10 @@ private:
 	TObjectPtr<USoundSettingsMenuWidget> SoundSettingsMenuWidget;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> ApplyButton;
+	TObjectPtr<UButtonWidgetContainer> ApplyButton;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> BackButton;
+	TObjectPtr<UButtonWidgetContainer> BackButton;
 
 	UFUNCTION()
 	void OnApplyButtonClicked();

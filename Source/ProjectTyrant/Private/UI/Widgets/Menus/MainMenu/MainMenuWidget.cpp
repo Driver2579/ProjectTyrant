@@ -4,7 +4,7 @@
 
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
-#include "UI/Widgets/Containers/ButtonContainerWidget.h"
+#include "UI/Widgets/Containers/ButtonWidgetContainer.h"
 #include "UI/Widgets/Menus/MainMenu/ChooseDifficultyWidget.h"
 #include "UI/Widgets/Menus/SettingsMenus/SettingsMenuWidget.h"
 

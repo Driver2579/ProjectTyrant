@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "ButtonContainerWidget.generated.h"
+#include "ButtonWidgetContainer.generated.h"
 
 class UButton;
 
@@ -13,7 +13,7 @@ class UButton;
  * styles.
  */
 UCLASS()
-class PROJECTTYRANT_API UButtonContainerWidget : public UUserWidget
+class PROJECTTYRANT_API UButtonWidgetContainer : public UUserWidget
 {
 	GENERATED_BODY()
 
@@ -21,6 +21,6 @@ public:
 	UButton* GetButton() const { return Button; }
 
 private:
-	UPROPERTY(Transient, meta=(BindWidget))
+	UPROPERTY(Transient, BlueprintReadOnly, meta=(BindWidget, AllowPrivateAccess="true"))
 	TObjectPtr<UButton> Button;
 };

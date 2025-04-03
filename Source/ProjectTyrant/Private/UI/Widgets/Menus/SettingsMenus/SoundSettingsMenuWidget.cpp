@@ -4,8 +4,8 @@
 
 #include "Components/Slider.h"
 #include "GameUserSettings/ProjectTyrantGameUserSettings.h"
-#include "UI/Widgets/Containers/ButtonContainerWidget.h"
-#include "UI/Widgets/Containers/SliderContainerWidget.h"
+#include "UI/Widgets/Containers/ButtonWidgetContainer.h"
+#include "UI/Widgets/Containers/SliderWidgetContainer.h"
 #include "UI/Widgets/Menus/SettingsMenus/SettingsMenuWidget.h"
 
 void USoundSettingsMenuWidget::NativeConstruct()

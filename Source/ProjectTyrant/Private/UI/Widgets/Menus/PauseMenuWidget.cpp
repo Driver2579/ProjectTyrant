@@ -5,7 +5,7 @@
 #include "Components/Button.h"
 #include "Controllers/PlayerControllers/ProjectTyrantPlayerController.h"
 #include "Kismet/GameplayStatics.h"
-#include "UI/Widgets/Containers/ButtonContainerWidget.h"
+#include "UI/Widgets/Containers/ButtonWidgetContainer.h"
 #include "UI/Widgets/Menus/SettingsMenus/SettingsMenuWidget.h"
 
 void UPauseMenuWidget::NativeConstruct()

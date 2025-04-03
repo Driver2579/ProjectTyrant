@@ -6,7 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "EndGameWidget.generated.h"
 
-class UButtonContainerWidget;
+class UButtonWidgetContainer;
 
 /**
  * 
@@ -21,13 +21,13 @@ protected:
 
 private:
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> RestartButton;
+	TObjectPtr<UButtonWidgetContainer> RestartButton;
 
 	UFUNCTION()
 	void OnRestartButtonClicked();
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> GoToMainMenuButton;
+	TObjectPtr<UButtonWidgetContainer> GoToMainMenuButton;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSoftObjectPtr<UWorld> MainMenuLevel;

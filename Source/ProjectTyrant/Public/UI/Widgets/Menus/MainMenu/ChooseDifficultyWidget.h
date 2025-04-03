@@ -6,7 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "ChooseDifficultyWidget.generated.h"
 
-class UButtonContainerWidget;
+class UButtonWidgetContainer;
 
 enum class EDifficulty : uint8;
 
@@ -31,13 +31,13 @@ protected:
 
 private:
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> EasyButton;
+	TObjectPtr<UButtonWidgetContainer> EasyButton;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> NormalButton;
+	TObjectPtr<UButtonWidgetContainer> NormalButton;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> HardButton;
+	TObjectPtr<UButtonWidgetContainer> HardButton;
 
 	UFUNCTION()
 	void OnEasyButtonClicked();
@@ -52,7 +52,7 @@ private:
 
 	// When clicked, simply closes the widget without choosing the difficulty
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> CancelButton;
+	TObjectPtr<UButtonWidgetContainer> CancelButton;
 
 	UFUNCTION()
 	void OnCancelButtonClicked();

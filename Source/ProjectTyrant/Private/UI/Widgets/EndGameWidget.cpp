@@ -4,7 +4,7 @@
 
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"
-#include "UI/Widgets/Containers/ButtonContainerWidget.h"
+#include "UI/Widgets/Containers/ButtonWidgetContainer.h"
 
 void UEndGameWidget::NativeConstruct()
 {

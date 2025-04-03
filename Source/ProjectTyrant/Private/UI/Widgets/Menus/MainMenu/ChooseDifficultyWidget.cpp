@@ -5,7 +5,7 @@
 #include "Common/Enums/Difficulty.h"
 #include "Components/Button.h"
 #include "GameInstances/ProjectTyrantGameInstance.h"
-#include "UI/Widgets/Containers/ButtonContainerWidget.h"
+#include "UI/Widgets/Containers/ButtonWidgetContainer.h"
 
 void UChooseDifficultyWidget::NativeConstruct()
 {

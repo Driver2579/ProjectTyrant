@@ -7,7 +7,7 @@
 #include "PauseMenuWidget.generated.h"
 
 class USettingsMenuWidget;
-class UButtonContainerWidget;
+class UButtonWidgetContainer;
 
 UCLASS()
 class PROJECTTYRANT_API UPauseMenuWidget : public UUserWidget
@@ -20,13 +20,13 @@ protected:
 
 private:
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> ResumeButton;
+	TObjectPtr<UButtonWidgetContainer> ResumeButton;
 
 	UFUNCTION()
 	void OnResumeButtonClicked();
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> SettingsButton;
+	TObjectPtr<UButtonWidgetContainer> SettingsButton;
 
 	UPROPERTY(EditDefaultsOnly, Category="Settings")
 	TSubclassOf<USettingsMenuWidget> SettingsMenuWidgetClass;
@@ -40,7 +40,7 @@ private:
 	void OnSettingsMenuBackButtonClicked();
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> ExitButton;
+	TObjectPtr<UButtonWidgetContainer> ExitButton;
 
 	UPROPERTY(EditDefaultsOnly)
 	TSoftObjectPtr<UWorld> MainMenuLevel;

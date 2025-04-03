@@ -6,7 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "SoundSettingsMenuWidget.generated.h"
 
-class USliderContainerWidget;
+class USliderWidgetContainer;
 
 UCLASS()
 class PROJECTTYRANT_API USoundSettingsMenuWidget : public UUserWidget
@@ -18,13 +18,13 @@ protected:
 
 private:
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<USliderContainerWidget> MasterVolumeSlider;
+	TObjectPtr<USliderWidgetContainer> MasterVolumeSlider;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<USliderContainerWidget> MusicVolumeSlider;
+	TObjectPtr<USliderWidgetContainer> MusicVolumeSlider;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<USliderContainerWidget> SFXVolumeSlider;
+	TObjectPtr<USliderWidgetContainer> SFXVolumeSlider;
 
 	void InitializeSlidersValuesFromGameUserSettings() const;
 

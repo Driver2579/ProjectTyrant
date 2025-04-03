@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "SliderContainerWidget.generated.h"
+#include "SliderWidgetContainer.generated.h"
 
 class USlider;
 
@@ -13,7 +13,7 @@ class USlider;
  * styles.
  */
 UCLASS()
-class PROJECTTYRANT_API USliderContainerWidget : public UUserWidget
+class PROJECTTYRANT_API USliderWidgetContainer : public UUserWidget
 {
 	GENERATED_BODY()
 

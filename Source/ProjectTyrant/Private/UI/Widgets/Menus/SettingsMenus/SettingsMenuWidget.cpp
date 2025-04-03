@@ -4,7 +4,7 @@
 
 #include "Components/Button.h"
 #include "Components/WidgetSwitcher.h"
-#include "UI/Widgets/Containers/ButtonContainerWidget.h"
+#include "UI/Widgets/Containers/ButtonWidgetContainer.h"
 #include "UI/Widgets/Menus/SettingsMenus/GraphicsSettingsMenuWidget.h"
 #include "UI/Widgets/Menus/SettingsMenus/SoundSettingsMenuWidget.h"
 

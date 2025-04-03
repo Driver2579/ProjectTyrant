@@ -6,7 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "MainMenuWidget.generated.h"
 
-class UButtonContainerWidget;
+class UButtonWidgetContainer;
 
 // The widget that contains all elements of the main menu
 UCLASS()
@@ -20,7 +20,7 @@ protected:
 private:
 	// Opens the ChooseDifficultyWidget and starts the game once the difficulty is chosen
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> PlayButton;
+	TObjectPtr<UButtonWidgetContainer> PlayButton;
 
 	// The widget that shows up when the player presses the Play button. Once the difficulty is chosen, the game starts.
 	UPROPERTY(EditDefaultsOnly, Category="Play")
@@ -37,7 +37,7 @@ private:
 	TSoftObjectPtr<UWorld> PlayingLevel;
 
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> SettingsButton;
+	TObjectPtr<UButtonWidgetContainer> SettingsButton;
 
 	UPROPERTY(EditDefaultsOnly, Category="Settings")
 	TSubclassOf<class USettingsMenuWidget> SettingsMenuWidgetClass;
@@ -49,7 +49,7 @@ private:
 
 	// Closes the game
 	UPROPERTY(Transient, meta=(BindWidget))
-	TObjectPtr<UButtonContainerWidget> ExitButton;
+	TObjectPtr<UButtonWidgetContainer> ExitButton;
 
 	UFUNCTION()
 	void OnExitButtonClicked();
