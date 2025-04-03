@@ -28,6 +28,17 @@ void UPauseMenuWidget::NativeConstruct()
 	}
 }
 
+void UPauseMenuWidget::NativeDestruct()
+{
+	if (SettingsMenuWidget)
+	{
+		SettingsMenuWidget->RemoveFromParent();
+		SettingsMenuWidget = nullptr;
+	}
+
+	Super::NativeDestruct();
+}
+
 // ReSharper disable once CppMemberFunctionMayBeConst
 void UPauseMenuWidget::OnResumeButtonClicked()
 {
@@ -46,8 +57,7 @@ void UPauseMenuWidget::OnSettingsButtonClicked()
 		return;
 	}
 
-	USettingsMenuWidget* SettingsMenuWidget = CreateWidget<USettingsMenuWidget>(this,
-		SettingsMenuWidgetClass);
+	SettingsMenuWidget = CreateWidget<USettingsMenuWidget>(this, SettingsMenuWidgetClass);
 
 	if (!ensureAlways(IsValid(SettingsMenuWidget)))
 	{
@@ -57,20 +67,13 @@ void UPauseMenuWidget::OnSettingsButtonClicked()
 	// Subscribe to the events
 	SettingsMenuWidget->OnBack.AddUObject(this, &ThisClass::OnSettingsMenuBackButtonClicked);
 
-	/**
-	 * Remove this widget from the viewport and add the SettingsMenuWidget instead.
-	 *
-	 * Note: This widget won't be garbage collected because it's referenced by the SettingsMenuWidget as an
-	 * OwningObject.
-	 */
-	RemoveFromParent();
+	SetVisibility(ESlateVisibility::Hidden);
 	SettingsMenuWidget->AddToViewport();
 }
 
 void UPauseMenuWidget::OnSettingsMenuBackButtonClicked()
 {
-	// Add this widget back to the viewport
-	AddToViewport();
+	SetVisibility(ESlateVisibility::Visible);
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst

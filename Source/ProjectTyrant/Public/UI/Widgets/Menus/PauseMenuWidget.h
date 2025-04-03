@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "PauseMenuWidget.generated.h"
 
+class USettingsMenuWidget;
 class UButtonContainerWidget;
 
 UCLASS()
@@ -15,6 +16,7 @@ class PROJECTTYRANT_API UPauseMenuWidget : public UUserWidget
 
 protected:
 	virtual void NativeConstruct() override;
+	virtual void NativeDestruct() override;
 
 private:
 	UPROPERTY(Transient, meta=(BindWidget))
@@ -27,7 +29,10 @@ private:
 	TObjectPtr<UButtonContainerWidget> SettingsButton;
 
 	UPROPERTY(EditDefaultsOnly, Category="Settings")
-	TSubclassOf<class USettingsMenuWidget> SettingsMenuWidgetClass;
+	TSubclassOf<USettingsMenuWidget> SettingsMenuWidgetClass;
+
+	UPROPERTY(Transient)
+	TObjectPtr<USettingsMenuWidget> SettingsMenuWidget;
 
 	UFUNCTION()
 	void OnSettingsButtonClicked();

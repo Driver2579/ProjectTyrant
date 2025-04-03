@@ -4,6 +4,8 @@
 
 #include "Blueprint/UserWidget.h"
 #include "Engine/AssetManager.h"
+#include "UI/Widgets/EndGameWidget.h"
+#include "UI/Widgets/Menus/PauseMenuWidget.h"
 
 void AProjectTyrantHUD::BeginPlay()
 {
@@ -36,7 +38,9 @@ void AProjectTyrantHUD::ShowPauseMenu()
 
 void AProjectTyrantHUD::OnPauseMenuWidgetClassLoaded()
 {
-	PauseMenuWidget = CreateWidget(GetOwningPlayerController(), PauseMenuWidgetClass.Get());
+	PauseMenuWidget = CreateWidget<UPauseMenuWidget>(GetOwningPlayerController(),
+		PauseMenuWidgetClass.Get());
+
 	PauseMenuWidget->AddToViewport();
 }
 

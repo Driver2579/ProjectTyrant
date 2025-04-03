@@ -47,13 +47,7 @@ void UMainMenuWidget::OnPlayButtonClicked()
 	ChooseDifficultyWidget->OnDifficultyChosen.AddUObject(this, &ThisClass::OnDifficultyChosen);
 	ChooseDifficultyWidget->OnCanceled.AddUObject(this, &ThisClass::OnCanceledChoosingDifficulty);
 
-	/**
-	 * Remove this widget from the viewport and add the ChooseDifficultyWidget instead.
-	 *
-	 * Note: This widget won't be garbage collected because it's referenced by the ChooseDifficultyWidget as an
-	 * OwningObject.
-	 */
-	RemoveFromParent();
+	SetVisibility(ESlateVisibility::Hidden);
 	ChooseDifficultyWidget->AddToViewport();
 }
 
@@ -64,8 +58,7 @@ void UMainMenuWidget::OnDifficultyChosen() const
 
 void UMainMenuWidget::OnCanceledChoosingDifficulty()
 {
-	// Add this widget back to the viewport
-	AddToViewport();
+	SetVisibility(ESlateVisibility::Visible);
 }
 
 void UMainMenuWidget::OnSettingsButtonClicked()
@@ -86,20 +79,13 @@ void UMainMenuWidget::OnSettingsButtonClicked()
 	// Subscribe to the events
 	SettingsMenuWidget->OnBack.AddUObject(this, &ThisClass::OnSettingsMenuBackButtonClicked);
 
-	/**
-	 * Remove this widget from the viewport and add the SettingsMenuWidget instead.
-	 *
-	 * Note: This widget won't be garbage collected because it's referenced by the SettingsMenuWidget as an
-	 * OwningObject.
-	 */
-	RemoveFromParent();
+	SetVisibility(ESlateVisibility::Hidden);
 	SettingsMenuWidget->AddToViewport();
 }
 
 void UMainMenuWidget::OnSettingsMenuBackButtonClicked()
 {
-	// Add this widget back to the viewport
-	AddToViewport();
+	SetVisibility(ESlateVisibility::Visible);
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst

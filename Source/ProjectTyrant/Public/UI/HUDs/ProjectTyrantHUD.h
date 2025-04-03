@@ -6,6 +6,9 @@
 #include "GameFramework/HUD.h"
 #include "ProjectTyrantHUD.generated.h"
 
+class UEndGameWidget;
+class UPauseMenuWidget;
+
 UCLASS()
 class PROJECTTYRANT_API AProjectTyrantHUD : public AHUD
 {
@@ -30,20 +33,20 @@ private:
 	bool bShowCursorFromStart = false;
 
 	UPROPERTY(EditDefaultsOnly, Category="Widgets")
-	TSoftClassPtr<UUserWidget> PauseMenuWidgetClass;
+	TSoftClassPtr<UPauseMenuWidget> PauseMenuWidgetClass;
 
 	TSharedPtr<struct FStreamableHandle> LoadPauseMenuWidgetClassHandle;
 
 	void OnPauseMenuWidgetClassLoaded();
 
 	UPROPERTY(Transient)
-	TObjectPtr<UUserWidget> PauseMenuWidget;
+	TObjectPtr<UPauseMenuWidget> PauseMenuWidget;
 
 	UPROPERTY(EditDefaultsOnly, Category="Widgets")
-	TSoftClassPtr<UUserWidget> WinWidgetClass;
+	TSoftClassPtr<UEndGameWidget> WinWidgetClass;
 
 	UPROPERTY(EditDefaultsOnly, Category="Widgets")
-	TSoftClassPtr<UUserWidget> LoseWidgetClass;
+	TSoftClassPtr<UEndGameWidget> LoseWidgetClass;
 
 	void OnWinWidgetLoaded() const;
 	void OnLoseWidgetLoaded() const;
