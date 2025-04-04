@@ -12,7 +12,8 @@
 				"Mover",
 				"Engine",
 				"UMG",
-				"StateTreeModule"
+				"StateTreeModule",
+				"AIModule"
 			]
 		}
 	],
