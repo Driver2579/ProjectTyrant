@@ -4,10 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "StateTreeTaskBase.h"
-#include "Perception/AIPerceptionTypes.h"
 #include "UpdatePerceptionDataStateTreeAITask.generated.h"
-
-struct FStateTreeInstanceStorage;
 
 USTRUCT()
 struct FUpdatePerceptionDataStateTreeAITaskInstanceData
@@ -26,6 +23,8 @@ struct FUpdatePerceptionDataStateTreeAITask : public FStateTreeTaskCommonBase
 {
 	GENERATED_BODY()
 
+	FUpdatePerceptionDataStateTreeAITask();
+
 	using FInstanceDataType = FUpdatePerceptionDataStateTreeAITaskInstanceData;
 
 	virtual const UStruct* GetInstanceDataType() const override { return FInstanceDataType::StaticStruct(); }
@@ -37,7 +36,7 @@ struct FUpdatePerceptionDataStateTreeAITask : public FStateTreeTaskCommonBase
 		const FStateTreeTransitionResult& Transition) const override;
 
 protected:
-	virtual void OnTargetPerceptionUpdated(AActor* Actor, const FAIStimulus& Stimulus) const;
+	virtual void OnTargetPerceptionUpdated(AActor* Actor, const struct FAIStimulus& Stimulus) const;
 
 private:
 	void SetCachedInstanceDataFromContext(const FStateTreeExecutionContext& Context) const;
@@ -48,7 +47,7 @@ private:
 	 * because overriden functions are const. We need it to be able to send an event. UStateTreeNodeBlueprintBase does
 	 * the same thing.
 	 */
-	mutable TWeakPtr<FStateTreeInstanceStorage> WeakInstanceStorage;
+	mutable TWeakPtr<struct FStateTreeInstanceStorage> WeakInstanceStorage;
 
 	// We need it for the same reason as the WeakInstanceStorage
 	UPROPERTY(Transient)

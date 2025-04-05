@@ -8,6 +8,11 @@
 #include "Components/AIPerceptionComponents/ProjectTyrantAIPerceptionComponent.h"
 #include "Perception/AIPerceptionComponent.h"
 
+FUpdatePerceptionDataStateTreeAITask::FUpdatePerceptionDataStateTreeAITask()
+{
+	bShouldCallTick = false;
+}
+
 EStateTreeRunStatus FUpdatePerceptionDataStateTreeAITask::EnterState(FStateTreeExecutionContext& Context,
 	const FStateTreeTransitionResult& Transition) const
 {
