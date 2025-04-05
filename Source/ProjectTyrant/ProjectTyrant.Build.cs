@@ -16,7 +16,8 @@ public class ProjectTyrant : ModuleRules
 			"InputCore",
 			"EnhancedInput",
 			"Mover",
-			"StateTreeModule"
+			"StateTreeModule",
+			"GameplayTags"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]

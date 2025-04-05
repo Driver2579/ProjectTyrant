@@ -10,15 +10,7 @@ EStateTreeRunStatus FGetActorOfClassStateTreeTask::EnterState(FStateTreeExecutio
 {
 	const FInstanceDataType& InstanceData = Context.GetInstanceData(*this);
 
-	AActor** OutActorPtr = InstanceData.OutActorRef.GetMutablePtr(Context);
-
-	if (!ensureAlways(OutActorPtr))
-	{
-		return EStateTreeRunStatus::Failed;
-	}
-
-	AActor*& OutActor = *OutActorPtr;
-
+	AActor*& OutActor = *InstanceData.OutActorRef.GetMutablePtr(Context);
 	OutActor = UGameplayStatics::GetActorOfClass(Context.GetOwner(), InstanceData.ActorClass);
 
 	return OutActor ? EStateTreeRunStatus::Running : EStateTreeRunStatus::Failed;
