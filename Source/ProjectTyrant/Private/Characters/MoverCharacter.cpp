@@ -9,6 +9,7 @@
 #include "DefaultMovementSet/CharacterMoverComponent.h"
 #include "DefaultMovementSet/NavMoverComponent.h"
 #include "DefaultMovementSet/Settings/CommonLegacyMovementSettings.h"
+#include "GameInstances/ProjectTyrantGameInstance.h"
 #include "GameModes/ProjectTyrantGameMode.h"
 
 AMoverCharacter::AMoverCharacter()
@@ -153,16 +154,7 @@ void AMoverCharacter::AddMovementInput(const FVector WorldDirection, const float
 
 	ControlInputVector = WorldDirection * ScaleValue;
 
-	// Make noise if the player is running
-	if (bIsRunning && ScaleValue >= MinMovementScaleValueToMakeNoise)
-	{
-		const AProjectTyrantGameMode* ProjectTyrantGameMode = GetWorld()->GetAuthGameMode<AProjectTyrantGameMode>();
-
-		if (ensureAlways(IsValid(ProjectTyrantGameMode)))
-		{
-			ProjectTyrantGameMode->OnPlayerMadeNoise.Broadcast();
-		}
-	}
+	TryMakeMovementNoise(ScaleValue);
 }
 
 FVector AMoverCharacter::ConsumeMovementInputVector()
@@ -396,5 +388,40 @@ void AMoverCharacter::StopRunning()
 		SharedSettings->MaxSpeed = SpeedBeforeRunning;
 
 		bIsRunning = false;
+	}
+}
+
+void AMoverCharacter::TryMakeMovementNoise(const float MovementScaleValue) const
+{
+	/**
+	 * Make noise only if character is controlled by player, is running and the scale value is greater than the minimum
+	 * required one.
+	 */
+	if (!IsPlayerControlled() || !bIsRunning || MovementScaleValue < MinMovementScaleValueToMakeNoise)
+	{
+		return;
+	}
+
+	EDifficulty Difficulty = EDifficulty::Normal;
+
+	const UProjectTyrantGameInstance* ProjectTyrantGameInstance = GetGameInstance<UProjectTyrantGameInstance>();
+
+	if (ensureAlways(IsValid(ProjectTyrantGameInstance)))
+	{
+		Difficulty = ProjectTyrantGameInstance->GetDifficulty();
+	}
+
+	// Don't make noise on Easy difficulty
+	if (Difficulty == EDifficulty::Easy)
+	{
+		return;
+	}
+
+	const AProjectTyrantGameMode* ProjectTyrantGameMode = GetWorld()->GetAuthGameMode<AProjectTyrantGameMode>();
+
+	// Broadcast the noise delegate
+	if (ensureAlways(IsValid(ProjectTyrantGameMode)))
+	{
+		ProjectTyrantGameMode->OnPlayerMadeNoise.Broadcast();
 	}
 }
