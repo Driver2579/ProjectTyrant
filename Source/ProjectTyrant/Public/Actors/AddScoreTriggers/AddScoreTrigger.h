@@ -19,8 +19,10 @@ public:
 protected:
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
-	UFUNCTION(BlueprintNativeEvent)
-	void OnOverlapOnce(AActor* OtherActor);
+	virtual void OnOverlapOnce(AActor* OtherActor);
+
+	UFUNCTION(BlueprintImplementableEvent, DisplayName="On Overlap Once")
+	void BP_OnOverlapOnce(AActor* OtherActor);
 
 private:
 	bool bHasOverlapped = false;

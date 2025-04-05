@@ -20,6 +20,8 @@ public:
 	// Should be called when the player loses
 	void Lose(APlayerController* PlayerController);
 
+	FSimpleMulticastDelegate OnPlayerMadeNoise;
+
 private:
 	void EndGame(APlayerController* PlayerController);
 };

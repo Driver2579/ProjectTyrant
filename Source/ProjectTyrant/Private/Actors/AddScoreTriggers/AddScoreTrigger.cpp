@@ -1,6 +1,6 @@
 // Vladislav Semchuk, 2025
 
-#include "Actors/AddScoreTrigger.h"
+#include "Actors/AddScoreTriggers/AddScoreTrigger.h"
 
 #include "GameStates/ScoringGameState.h"
 
@@ -39,6 +39,7 @@ void AAddScoreTrigger::NotifyActorBeginOverlap(AActor* OtherActor)
 	bHasOverlapped = true;
 }
 
-void AAddScoreTrigger::OnOverlapOnce_Implementation(AActor* OtherActor)
+void AAddScoreTrigger::OnOverlapOnce(AActor* OtherActor)
 {
+	BP_OnOverlapOnce(OtherActor);
 }

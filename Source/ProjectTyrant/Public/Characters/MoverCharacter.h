@@ -151,6 +151,12 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category="Movement")
 	float RunSpeed = 600;
+	
+	bool bIsRunning = false;
 
 	float SpeedBeforeRunning = 0;
+
+	// The minimum movement scale value to make noise when running
+	UPROPERTY(EditDefaultsOnly, Category="AI|Noise", meta=(ClampMin=0))
+	float MinMovementScaleValueToMakeNoise = 1;
 };

@@ -4,28 +4,24 @@
 
 #include "CoreMinimal.h"
 #include "StateTreeTaskBase.h"
-#include "UpdatePerceptionDataStateTreeAITask.generated.h"
+#include "ListenForSimulatedNoiseStateTreeAITask.generated.h"
 
 USTRUCT()
-struct FUpdatePerceptionDataStateTreeAITaskInstanceData
+struct FListenForSimulatedNoiseStateTreeAITaskInstanceData
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, Category="Context")
-	TObjectPtr<class AAIController> AIController;
-
-	FDelegateHandle OnTargetPerceptionUpdatedDelegateHandle;
+	FDelegateHandle OnPlayerMadeNoiseDelegateHandle;
 };
 
-// AI task that sends events when the perception data is updated
-USTRUCT(meta=(DisplayName="Update Perception Data"))
-struct FUpdatePerceptionDataStateTreeAITask : public FStateTreeTaskCommonBase
+USTRUCT(meta=(DisplayName="Listen for Simulated Noise"))
+struct FListenForSimulatedNoiseStateTreeAITask : public FStateTreeTaskCommonBase
 {
 	GENERATED_BODY()
 
-	FUpdatePerceptionDataStateTreeAITask();
+	FListenForSimulatedNoiseStateTreeAITask();
 
-	using FInstanceDataType = FUpdatePerceptionDataStateTreeAITaskInstanceData;
+	using FInstanceDataType = FListenForSimulatedNoiseStateTreeAITaskInstanceData;
 
 	virtual const UStruct* GetInstanceDataType() const override { return FInstanceDataType::StaticStruct(); }
 
@@ -36,7 +32,7 @@ struct FUpdatePerceptionDataStateTreeAITask : public FStateTreeTaskCommonBase
 		const FStateTreeTransitionResult& Transition) const override;
 
 protected:
-	virtual void OnTargetPerceptionUpdated(AActor* Actor, const struct FAIStimulus& Stimulus) const;
+	virtual void OnPlayerMadeNoise() const;
 
 private:
 	void SetCachedInstanceDataFromContext(const FStateTreeExecutionContext& Context) const;

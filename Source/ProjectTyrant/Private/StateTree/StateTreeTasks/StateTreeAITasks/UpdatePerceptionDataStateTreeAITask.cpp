@@ -32,9 +32,8 @@ EStateTreeRunStatus FUpdatePerceptionDataStateTreeAITask::EnterState(FStateTreeE
 		return EStateTreeRunStatus::Failed;
 	}
 
-	// Subscribe to the perception events and pass the Context to the callback function
-	InstanceData.OnTargetPerceptionUpdatedDelegateHandle = PerceptionComponent->OnTargetPerceptionUpdatedStatic.AddRaw(this,
-		&FUpdatePerceptionDataStateTreeAITask::OnTargetPerceptionUpdated);
+	InstanceData.OnTargetPerceptionUpdatedDelegateHandle = PerceptionComponent->OnTargetPerceptionUpdatedStatic.AddRaw(
+		this, &FUpdatePerceptionDataStateTreeAITask::OnTargetPerceptionUpdated);
 
 	return EStateTreeRunStatus::Running;
 }

@@ -9,6 +9,7 @@
 #include "DefaultMovementSet/CharacterMoverComponent.h"
 #include "DefaultMovementSet/NavMoverComponent.h"
 #include "DefaultMovementSet/Settings/CommonLegacyMovementSettings.h"
+#include "GameModes/ProjectTyrantGameMode.h"
 
 AMoverCharacter::AMoverCharacter()
 {
@@ -145,9 +146,22 @@ void AMoverCharacter::UpdateNavigationRelevance()
 void AMoverCharacter::AddMovementInput(const FVector WorldDirection, const float ScaleValue,
 	const bool bForce)
 {
-	if (bForce || !IsMoveInputIgnored())
+	if (!bForce && IsMoveInputIgnored())
 	{
-		ControlInputVector = WorldDirection * ScaleValue;
+		return;
+	}
+
+	ControlInputVector = WorldDirection * ScaleValue;
+
+	// Make noise if the player is running
+	if (bIsRunning && ScaleValue >= MinMovementScaleValueToMakeNoise)
+	{
+		const AProjectTyrantGameMode* ProjectTyrantGameMode = GetWorld()->GetAuthGameMode<AProjectTyrantGameMode>();
+
+		if (ensureAlways(IsValid(ProjectTyrantGameMode)))
+		{
+			ProjectTyrantGameMode->OnPlayerMadeNoise.Broadcast();
+		}
 	}
 }
 
@@ -366,6 +380,8 @@ void AMoverCharacter::StartRunning()
 	{
 		SpeedBeforeRunning = SharedSettings->MaxSpeed;
 		SharedSettings->MaxSpeed = RunSpeed;
+
+		bIsRunning = true;
 	}
 }
 
@@ -378,5 +394,7 @@ void AMoverCharacter::StopRunning()
 	if (ensureAlways(IsValid(SharedSettings)))
 	{
 		SharedSettings->MaxSpeed = SpeedBeforeRunning;
+
+		bIsRunning = false;
 	}
 }
