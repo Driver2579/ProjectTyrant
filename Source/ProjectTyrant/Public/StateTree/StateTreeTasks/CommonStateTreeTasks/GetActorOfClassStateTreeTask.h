@@ -28,8 +28,8 @@ struct FGetActorOfClassStateTreeTaskInstanceData
 };
 
 /**
- * A task that gets the first actor of a specified class in the world and stores it in an output property reference.\n
- * \n
+ * A task that gets the first actor of a specified class in the world and stores it in an output property reference.
+ * 
  * Note: You cannot pass a child class of an Actor class to this task. The task will only accept the base class (Actor).
  */
 USTRUCT(meta=(DisplayName="Get Actor of Class"))
