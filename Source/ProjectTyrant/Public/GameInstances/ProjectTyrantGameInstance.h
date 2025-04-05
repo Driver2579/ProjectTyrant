@@ -4,9 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "Common/Enums/Difficulty.h"
 #include "ProjectTyrantGameInstance.generated.h"
-
-enum class EDifficulty : uint8;
 
 UCLASS()
 class PROJECTTYRANT_API UProjectTyrantGameInstance : public UGameInstance
@@ -26,7 +25,7 @@ protected:
 	virtual void OnApplySoundSettings();
 
 private:
-	EDifficulty Difficulty;
+	EDifficulty Difficulty = EDifficulty::Normal;
 
 	// A sound mix to use and to apply the settings to
 	UPROPERTY(EditDefaultsOnly, Category="Settings|Sounds")
