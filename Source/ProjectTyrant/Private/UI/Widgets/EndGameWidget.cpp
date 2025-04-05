@@ -21,6 +21,11 @@ void UEndGameWidget::NativeConstruct()
 	}
 
 	GetOwningPlayer()->SetShowMouseCursor(true);
+
+	if (SoundToPlayOnConstruct)
+	{
+		UGameplayStatics::PlaySound2D(this, SoundToPlayOnConstruct);
+	}
 }
 
 // ReSharper disable once CppMemberFunctionMayBeConst

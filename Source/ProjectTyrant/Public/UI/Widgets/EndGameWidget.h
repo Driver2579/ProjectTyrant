@@ -8,9 +8,6 @@
 
 class UButtonWidgetContainer;
 
-/**
- * 
- */
 UCLASS()
 class PROJECTTYRANT_API UEndGameWidget : public UUserWidget
 {
@@ -20,6 +17,9 @@ protected:
 	virtual void NativeConstruct() override;
 
 private:
+	UPROPERTY(EditDefaultsOnly, Category="Sounds")
+	TObjectPtr<USoundBase> SoundToPlayOnConstruct;
+
 	UPROPERTY(Transient, meta=(BindWidget))
 	TObjectPtr<UButtonWidgetContainer> RestartButton;
 
