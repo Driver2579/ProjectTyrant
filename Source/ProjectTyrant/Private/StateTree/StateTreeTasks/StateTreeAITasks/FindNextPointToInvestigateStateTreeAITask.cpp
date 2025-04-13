@@ -85,34 +85,33 @@ EStateTreeRunStatus FFindNextPointToInvestigateStateTreeAITask::EnterState(FStat
 	TArray<UNavigationPath*> Paths;
 	PointsPaths.GetKeys(Paths);
 
-	UNavigationPath* PathToTheNextPointToInvestigate;
-
 	/**
-	 * Find the PreferredPaths based on AI direction and the view cone angle if this is the first point to find and use
-	 * them first to find the shortest path.
+	 * We want to make sure the AI first investigates the points that were in his view cone ange before the first point
+	 * was found, and only then investigates the other points.
 	 */
+	FVector& InOutAILocationBeforeFirstPoint = *InstanceData.InOutAILocationBeforeFirstPoint.GetMutablePtr(Context);
+	FVector& InOutAIDirectionBeforeFirstPoint = *InstanceData.InOutAIDirectionBeforeFirstPoint.GetMutablePtr(
+		Context);
+
+	// Override AI's location and direction if it's the first point to find
 	if (InOutInvestigatedPoints.IsEmpty())
 	{
-		const FVector AILocation = InstanceData.OwnerActor->GetActorLocation();
-		const FVector AIDirection = InstanceData.AIController->GetControlRotation().Vector();
-
-		TArray<UNavigationPath*> PreferredPaths;
-		TArray<UNavigationPath*> NotPreferredPaths;
-		FindPreferredPaths(Paths, AILocation, AIDirection, InstanceData.PreferredFirstPointPathViewConeAngle,
-			PreferredPaths, NotPreferredPaths);
-
-		// First, try to find the shortest path in the preferred paths
-		PathToTheNextPointToInvestigate = FindShortestPath(PreferredPaths);
-
-		// If we didn't find any, try to find the shortest path in the not preferred paths
-		if (!PathToTheNextPointToInvestigate)
-		{
-			PathToTheNextPointToInvestigate = FindShortestPath(NotPreferredPaths);
-		}
+		InOutAILocationBeforeFirstPoint = InstanceData.OwnerActor->GetActorLocation();
+		InOutAIDirectionBeforeFirstPoint = InstanceData.AIController->GetControlRotation().Vector();
 	}
-	else
+
+	TArray<UNavigationPath*> PreferredPaths;
+	TArray<UNavigationPath*> NotPreferredPaths;
+	FindPreferredPaths(Paths, InOutAILocationBeforeFirstPoint, InOutAIDirectionBeforeFirstPoint,
+		InstanceData.PreferredFirstPointPathViewConeAngle, PreferredPaths, NotPreferredPaths);
+
+	// First, try to find the shortest path in the preferred paths
+	const UNavigationPath* PathToTheNextPointToInvestigate = FindShortestPath(PreferredPaths);
+
+	// If we didn't find any, try to find the shortest path in the not preferred paths
+	if (!PathToTheNextPointToInvestigate)
 	{
-		PathToTheNextPointToInvestigate = FindShortestPath(Paths);
+		PathToTheNextPointToInvestigate = FindShortestPath(NotPreferredPaths);
 	}
 
 	// Fail if we didn't find any path to the next point to investigate
@@ -230,7 +229,7 @@ bool FFindNextPointToInvestigateStateTreeAITask::IsPathInViewCone(const UNavigat
 
 	/**
 	 * Get the direction of the path start point by subtracting the AI location from the second point of the path (the
-	 * first one should be equal to the AI location).
+	 * first one could be equal to the AI location).
 	 */
 	const FVector PathStartDirection = (Path->PathPoints[1] - AILocation).GetSafeNormal();
 

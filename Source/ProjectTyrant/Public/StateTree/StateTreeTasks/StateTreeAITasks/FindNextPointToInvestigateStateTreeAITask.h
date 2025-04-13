@@ -41,10 +41,15 @@ struct FFindNextPointToInvestigateStateTreeAITaskInstanceData
 		meta=(RefType="/Script/CoreUObject.Vector", IsRefToArray))
 	FStateTreePropertyRef InOutInvestigatedPointsRef;
 
+	UPROPERTY(EditAnywhere, Category="Input", DisplayName="InOut AI Location Before First Point")
+	TStateTreePropertyRef<FVector> InOutAILocationBeforeFirstPoint;
+
+	UPROPERTY(EditAnywhere, Category="Input", DisplayName="InOut AI Direction Before First Point")
+	TStateTreePropertyRef<FVector> InOutAIDirectionBeforeFirstPoint;
+
 	/**
-	 * If it's the first point to find (InOutInvestigatedPoints array is empty), then the path to points within the
-	 * specified view cone of the OwnerActor's direction will be preferred over the other points even if their paths are
-	 * shorter.
+	 * The path to points within the specified view cone of the AI's direction and location (that are cached before the
+	 * first point is found) will be preferred over the other points even if their paths are shorter.
 	 */
 	UPROPERTY(EditAnywhere, Category="Parameter", meta=(ClampMin=0, ClampMax=360))
 	float PreferredFirstPointPathViewConeAngle = 90;
@@ -53,6 +58,11 @@ struct FFindNextPointToInvestigateStateTreeAITaskInstanceData
 	TStateTreePropertyRef<FVector> OutNextPointToInvestigateRef;
 };
 
+/**
+ * This task finds the next point for the AI to investigate by finding the one that has the shortest path to it. An
+ * algorithm also makes sure that the AI first investigates the points that were in his view cone before the first point
+ * was found, and only then investigates the other points.
+ */
 USTRUCT(meta=(DisplayName="Find Next Point to Investigate"))
 struct FFindNextPointToInvestigateStateTreeAITask : public FStateTreeTaskCommonBase
 {
