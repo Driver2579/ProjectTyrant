@@ -8,7 +8,7 @@ public class ProjectTyrant : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[]
+		PublicDependencyModuleNames.AddRange(new[]
 		{
 			"Core",
 			"CoreUObject",
@@ -17,7 +17,8 @@ public class ProjectTyrant : ModuleRules
 			"EnhancedInput",
 			"Mover",
 			"StateTreeModule",
-			"GameplayTags"
+			"GameplayTags",
+			"NavigationSystem"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[]
