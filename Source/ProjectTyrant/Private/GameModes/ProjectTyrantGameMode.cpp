@@ -51,7 +51,10 @@ void AProjectTyrantGameMode::EndGame(APlayerController* PlayerController)
 {
 #if DO_CHECK
 	check(IsValid(PlayerController));
+	check(PlayerController->PlayerState)
 #endif
+
+	OnGameEnded.Broadcast();
 
 	PlayerController->DisableInput(PlayerController);
 	SetPause(PlayerController);

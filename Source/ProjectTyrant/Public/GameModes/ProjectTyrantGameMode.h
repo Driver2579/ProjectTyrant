@@ -20,6 +20,9 @@ public:
 	// Should be called when the player loses
 	void Lose(APlayerController* PlayerController);
 
+	// Called when the player wins or loses
+	FSimpleMulticastDelegate OnGameEnded;
+
 	FSimpleMulticastDelegate OnPlayerMadeNoise;
 
 private:
