@@ -24,7 +24,7 @@ struct FGetActorLocationStateTreeTaskInstanceData
 	TObjectPtr<AActor> Actor;
 
 	UPROPERTY(Transient, VisibleAnywhere, Category="Output")
-	FVector OutActorLocation;
+	FVector OutActorLocation = FVector::ZeroVector;
 };
 
 USTRUCT(meta=(DisplayName="Get Actor Location"))

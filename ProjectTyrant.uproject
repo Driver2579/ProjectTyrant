@@ -36,6 +36,10 @@
 		{
 			"Name": "GameplayStateTree",
 			"Enabled": true
+		},
+		{
+			"Name": "StateTree",
+			"Enabled": true
 		}
 	]
 }

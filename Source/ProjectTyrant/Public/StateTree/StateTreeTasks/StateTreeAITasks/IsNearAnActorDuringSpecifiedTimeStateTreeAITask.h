@@ -39,7 +39,7 @@ struct FIsNearAnActorDuringSpecifiedTimeStateTreeAITaskInstanceData
 	bool bTestIncludesTargetRadius = true;
 
 	UPROPERTY(Transient, VisibleAnywhere, Category="Output", DisplayName="Out Is Near an Actor")
-	bool bOutIsNearAnActor;
+	bool bOutIsNearAnActor = false;
 
 	FTimerHandle TimerHandle;
 };

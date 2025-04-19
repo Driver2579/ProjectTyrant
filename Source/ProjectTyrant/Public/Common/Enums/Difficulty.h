@@ -7,5 +7,7 @@ enum class EDifficulty : uint8
 {
 	Easy,
 	Normal,
-	Hard
+	Hard,
+
+	None UMETA(Hidden)
 };

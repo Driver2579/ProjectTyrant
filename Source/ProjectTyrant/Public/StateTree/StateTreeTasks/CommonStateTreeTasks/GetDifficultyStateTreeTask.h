@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "StateTreeTaskBase.h"
 #include "StateTreePropertyRef.h"
+#include "Common/Enums/Difficulty.h"
 #include "GetDifficultyStateTreeTask.generated.h"
 
 enum class EDifficulty : uint8;
@@ -23,7 +24,7 @@ struct FGetDifficultyStateTreeTaskInstanceData
 	bool bRunTaskForever = false;
 
 	UPROPERTY(EditAnywhere, Category="Output")
-	EDifficulty OutDifficulty;
+	EDifficulty OutDifficulty = EDifficulty::None;
 };
 
 // Gets the difficulty from the GameInstance
