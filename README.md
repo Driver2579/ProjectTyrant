@@ -75,7 +75,7 @@ Project Tyrant is an atmospheric single-player game made on Unreal Engine 5.5 wi
 ## 📇 Developer contacts
 
 **Vladislav Semchuk**\
-**(also known as Vladyslav Semchuk or Driver2579)*\
+*(also known as Vladyslav Semchuk or Driver2579)*\
 [LinkedIn](https://www.linkedin.com/in/vladislav-semchuk-a2b944203/)
 
 ---
